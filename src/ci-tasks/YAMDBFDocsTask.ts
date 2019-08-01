@@ -71,7 +71,7 @@ export default class extends Task
 			const type: string = this._branch === 'master' ? 'indev' : 'stable';
 			const opts: ExecSyncOptions = { cwd: Config.get(`docs.${type}`) };
 
-			this._logger.log(`Starting docs build as of yamdbf/${type}#${this._req.body.after}`);
+			this._logger.log(`Task started: docs build - yamdbf/${type}#${this._req.body.after}`);
 			execSync('git clean -df && git checkout .', opts);
 			execSync('git pull', opts);
 			try { execSync('rm -rf node_modules', opts); } catch {}

@@ -70,7 +70,7 @@ export default class extends Task
 
 			const opts: ExecSyncOptions = { cwd: Config.get('yamdbf.indev') };
 
-			this._logger.log(`Starting YAMDBF indev build as of yamdbf/master#${this._req.body.after}`);
+			this._logger.log(`Task started: YAMDBF indev build - yamdbf/master#${this._req.body.after}`);
 			execSync('git clean -df && git checkout .', opts);
 			execSync('git pull', opts);
 			try { execSync('rm -rf node_modules', opts); } catch {}
