@@ -37,7 +37,7 @@ export class Config
 	}
 
 	/**
-	 * Fetches a nested value from within an object via the provided path
+	 * Fetch a nested value from within an object via the provided path
 	 */
 	private static _getNestedValue(obj: any, path: string[]): any
 	{

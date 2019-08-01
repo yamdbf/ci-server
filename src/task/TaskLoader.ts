@@ -9,11 +9,11 @@ export class TaskLoader
 {
 	@logger('TaskLoader')
 	private _logger!: Logger;
-	private _manager: TaskManager;
+	private _taskManager: TaskManager;
 
 	public constructor(manager: TaskManager)
 	{
-		this._manager = manager;
+		this._taskManager = manager;
 	}
 
 	/**
@@ -31,7 +31,7 @@ export class TaskLoader
 			for (const taskClass of taskClasses)
 			{
 				this._logger.log(`Loaded task \`${taskClass.task}\``);
-				this._manager.push(taskClass);
+				this._taskManager.push(taskClass);
 			}
 		}
 	}

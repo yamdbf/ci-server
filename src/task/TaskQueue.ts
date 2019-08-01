@@ -35,7 +35,7 @@ export class TaskQueue
 	}
 
 	/**
-	 * Unlocks the queue and runs the next Task
+	 * Unlock the queue and run the next Task
 	 */
 	private _unlock(): void
 	{
@@ -53,7 +53,8 @@ export class TaskQueue
 	}
 
 	/**
-	 * Run the next Task in the queue
+	 * Run the queue, executing the first task if there is one
+	 * and the queue is not busy
 	 */
 	private _run(): void
 	{
@@ -62,7 +63,8 @@ export class TaskQueue
 	}
 
 	/**
-	 * Execute the given Task
+	 * Execute the given Task if the queue is not busy,
+	 * otherwise add it back to the front of the queue
 	 */
 	private async _executeTask(task: Task): Promise<void>
 	{

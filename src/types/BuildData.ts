@@ -1,3 +1,6 @@
+/**
+ * Represents data to be passed to a new `Build`
+ */
 export interface BuildData
 {
 	repo: string;

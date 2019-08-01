@@ -2,28 +2,11 @@ import { TransportFunction } from '../../types/TransportFunction';
 import { LogType } from './LogType';
 export { logger } from './LoggerDecorator';
 
-/**
- * Singleton containing methods for asynchronous logging with clean,
- * configurable output via custom Logger transports
- *
- * Easiest manner of use is via the `@logger` parameter decorator
- * to attach the logger to a class property for use within that class.
- * Otherwise the singleton instance can be accessed via `Logger.instance()`
- *
- * Logging can be turned off by setting the logging level to `LogLevel.NONE`
- */
 export class Logger
 {
 	private static _instance: Logger;
 	private _transports: TransportFunction[];
 	private _baseTransportRemoved: boolean;
-
-	/**
-	 * Internal, set via Client at runtime if Client is running
-	 * in a shard process
-	 * @internal
-	 */
-	public static _shard: string;
 
 	private constructor()
 	{
@@ -31,10 +14,9 @@ export class Logger
 			throw new Error('Cannot create multiple instances of Logger singleton. Use Logger.instance() instead');
 
 		Logger._instance = this;
+
 		this._transports = [];
 		this._baseTransportRemoved = false;
-
-		// Create and add base transport
 
 		type Color = [number, number];
 		type Colors = 'red' | 'green' | 'yellow' | 'magenta' | 'cyan' | 'grey';
@@ -90,8 +72,10 @@ export class Logger
 	 */
 	public static instance(tag?: string): Logger
 	{
-		if (tag) return Logger.taggedInstance(tag);
-		else return Logger._instance || new Logger();
+		if (typeof tag !== 'undefined')
+			return Logger.taggedInstance(tag);
+
+		return Logger._instance || new Logger();
 	}
 
 	/**
@@ -104,7 +88,7 @@ export class Logger
 			get: (target: any, key: PropertyKey) => {
 				switch (key)
 				{
-					case 'log': case 'info': case 'warn': case 'error': case 'debug':
+					case 'log': case 'warn': case 'error': case 'debug':
 						return (...text: string[]) => target[key](tag, ...text);
 					default: return target[key];
 				}
@@ -118,7 +102,7 @@ export class Logger
 	 */
 	public static addTransport(transport: TransportFunction): void
 	{
-		this.instance()._transports.push(transport);
+		Logger.instance()._transports.push(transport);
 	}
 
 	/**
@@ -126,9 +110,9 @@ export class Logger
 	 */
 	public static removeBaseTransport(): void
 	{
-		if (this.instance()._baseTransportRemoved) return;
-		this.instance()._baseTransportRemoved = true;
-		this.instance()._transports.shift();
+		if (Logger.instance()._baseTransportRemoved) return;
+		Logger.instance()._baseTransportRemoved = true;
+		Logger.instance()._transports.shift();
 	}
 
 	/**
@@ -165,7 +149,6 @@ export class Logger
 
 	/**
 	 * Send log data to all transports
-	 * @private
 	 */
 	private _write(type: LogType, tag: string, text: string): void
 	{

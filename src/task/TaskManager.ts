@@ -7,21 +7,21 @@ import { TaskLoader } from './TaskLoader';
 
 export class TaskManager
 {
-	private _loader: TaskLoader;
+	private _taskLoader: TaskLoader;
 	private _queue: TaskQueue;
 	private _tasks: { [task: string]: TaskConstructor };
 
 	public constructor()
 	{
-		this._loader = new TaskLoader(this);
+		this._taskLoader = new TaskLoader(this);
 		this._queue = new TaskQueue();
 		this._tasks = {};
 
-		this._loader.loadTasksFrom(Path.join(__dirname, '../ci-tasks'));
+		this._taskLoader.loadTasksFrom(Path.join(__dirname, '../ci-tasks'));
 	}
 
 	/**
-	 * Push the given Task class to the Task class storage
+	 * Push the given `Task` class to the `Task` class storage
 	 */
 	public push(taskClass: TaskConstructor): void
 	{
@@ -29,7 +29,7 @@ export class TaskManager
 	}
 
 	/**
-	 * Creates the given task by task name and adds it to the queue
+	 * Creates the given `Task` by `Task` name and adds it to the queue
 	 */
 	public dispatch(task: string, req: Request, res: Response): void
 	{
