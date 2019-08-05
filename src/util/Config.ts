@@ -1,9 +1,5 @@
 import * as Path from 'path';
 
-/**
- * Singleton for retrieving config values depending on
- * NODE_ENV 'production' or 'development'
- */
 export class Config
 {
 	private static _instance: Config;
