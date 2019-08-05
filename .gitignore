@@ -1,4 +1,4 @@
 /node_modules/*
 /bin/*
-/test/*
+src/test/*
 config.json
