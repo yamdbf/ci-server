@@ -14,7 +14,7 @@
   "gulp": "3.9.1",
   "gulp-sourcemaps": "^2.6.5",
   "gulp-typescript": "^5.0.1",
-  "node-fetch": "^2.6.0",
+  "node-fetch": "^2.6.7",
   "typescript": "^3.5.3"
  }
 }
